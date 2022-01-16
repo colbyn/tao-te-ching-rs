@@ -1,4 +1,4 @@
 set -e
 
-cargo build
+cargo run
 git add . && git commit -m "update" && git push
