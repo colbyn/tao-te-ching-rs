@@ -2,6 +2,9 @@
 use std::collections::{HashMap, LinkedList};
 use std::str::FromStr;
 
+pub static IS_LOCAL: bool = false;
+pub static GITHUB_ROOT: &'static str = "https://colbyn.github.io/tao-te-ching-rs";
+pub static CURRENT_ROOT: &'static str = GITHUB_ROOT;
 
 #[derive(Debug, Default, Clone)]
 struct Line(String);
@@ -78,8 +81,16 @@ impl ToText for Chapter {
             .collect::<Vec<String>>()
             .join("\n");
         // TODO
-        let index_link = format!("/docs/index.html");
-        let page_link = format!("/docs/chapters/chapter-{}.html", self.index);
+        let index_link = if IS_LOCAL {
+            format!("/docs/index.html")
+        } else {
+            format!("{}/index.html", CURRENT_ROOT)
+        };
+        let page_link = if IS_LOCAL {
+            format!("/docs/chapters/chapter-{}.html", self.index)
+        } else {
+            format!("/docs/chapters/chapter-{}.html", self.index)
+        };
         // GO!
         let index_link = format!("<a href=\"{}\">Tao Te Ching</a>", index_link);
         let page_link = format!("<a href=\"{}\">Chapter {}</a>", page_link, self.index);
