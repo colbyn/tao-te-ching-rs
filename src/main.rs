@@ -4,8 +4,8 @@ use std::str::FromStr;
 
 pub static IS_LOCAL: bool = true;
 pub static GITHUB_ROOT: &'static str = "https://colbyn.github.io/tao-te-ching-rs";
-// pub static CURRENT_ROOT: &'static str = GITHUB_ROOT;
-pub static CURRENT_ROOT: &'static str = "docs";
+pub static CURRENT_ROOT: &'static str = GITHUB_ROOT;
+// pub static CURRENT_ROOT: &'static str = "docs";
 
 #[derive(Debug, Default, Clone)]
 struct Line(String);
