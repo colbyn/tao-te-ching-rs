@@ -118,7 +118,14 @@ fn pack(contents: String, mode: Mode) -> String {
     "#;
     let head = format!("<head>{}<link rel=\"stylesheet\" href=\"{}/styling.css\"></head>", deps, CURRENT_ROOT);
     let main = format!("<main mode=\"{mode}\">\n{contents}\n</main>", contents=contents, mode=mode.as_label());
-    let body = format!("<body>\n{}\n</body>", main);
+    let footer = r#"
+        <footer>
+        <p>Tao Te Ching, A Modern Paraphrase (1996).</p>
+        <p>Written by John H. McDonald.</p>
+        <p>For the Public Domain. Please distribute freely.</p>
+        </footer>
+    "#;
+    let body = format!("<body>\n{}\n{}\n</body>", main, footer);
     format!("<html>\n{}\n{}\n</html>", head, body)
 }
 
