@@ -8,11 +8,15 @@ body {
 
 main {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
     overflow: hidden;
     margin: 12px;
     row-gap: 12px;
     column-gap: 12px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+main[mode=page] {
+    grid-template-columns: 1fr;
 }
 
 @media (max-width: 700px) {
@@ -31,15 +35,16 @@ main {
 article {
     display: flex;
     flex-direction: column;
-    border: 1px solid #707070;
+    border: 1px solid #3e3e3e;
     border-radius: 3px;
 }
 
 
 
 article > h1:first-child {
-    border-bottom: 1px solid #707070;
+    border-bottom: 1px solid #3e3e3e;
     padding: 12px;
+    font-size: 1em;
 }
 
 article > h1 {
@@ -84,10 +89,15 @@ p[line] {
 p[line] a:first-child {
     text-decoration: none;
     color: inherit;
-    color: #a1a1a1;
+    color: #707070;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -o-user-select: none;
     user-select: none;
+    font-size: 0.75em;
+    align-items: baseline;
+    margin-top: 3px;
+    min-width: 30px;
+    text-align: right;
 }

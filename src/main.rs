@@ -3,9 +3,9 @@ use std::collections::{HashMap, LinkedList};
 use std::str::FromStr;
 
 pub static IS_LOCAL: bool = true;
-pub static GITHUB_ROOT: &'static str = "https://colbyn.github.io/tao-te-ching-rs";
-pub static CURRENT_ROOT: &'static str = GITHUB_ROOT;
-// pub static CURRENT_ROOT: &'static str = "docs";
+// pub static GITHUB_ROOT: &'static str = "https://colbyn.github.io/tao-te-ching-rs";
+// pub static CURRENT_ROOT: &'static str = GITHUB_ROOT;
+pub static CURRENT_ROOT: &'static str = "/docs";
 
 #[derive(Debug, Default, Clone)]
 struct Line(String);
@@ -22,9 +22,16 @@ struct Chapter {
 #[derive(Debug, Clone)]
 pub enum Mode {
     Index,
-    Page {
-        page_name: String
-    },
+    Page,
+}
+
+impl Mode {
+    pub fn as_label(&self) -> &str {
+        match self {
+            Mode::Index => "index",
+            Mode::Page => "page",
+        }
+    }
 }
 
 #[derive(Debug, Clone, Default)]
@@ -100,7 +107,7 @@ impl ToText for Chapter {
 }
 
 
-fn pack(contents: String) -> String {
+fn pack(contents: String, mode: Mode) -> String {
     let deps = r#"
         <meta charset="UTF-8">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -109,7 +116,7 @@ fn pack(contents: String) -> String {
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
     "#;
     let head = format!("<head>{}<link rel=\"stylesheet\" href=\"{}/styling.css\"></head>", deps, CURRENT_ROOT);
-    let main = format!("<main>\n{}\n</main>", contents);
+    let main = format!("<main mode=\"{mode}\">\n{contents}\n</main>", contents=contents, mode=mode.as_label());
     let body = format!("<body>\n{}\n</body>", main);
     format!("<html>\n{}\n{}\n</html>", head, body)
 }
@@ -162,11 +169,11 @@ fn run() {
             // TO TEXT
             let page_name = format!("Chapter {}", chapter.index);
             let settings = Settings {
-                mode: Some(Mode::Page {page_name}),
+                mode: Some(Mode::Page),
                 chapter_ix: chapter.index,
                 ..Settings::default()
             };
-            let file_text = pack(chapter.to_text(settings));
+            let file_text = pack(chapter.to_text(settings), Mode::Page);
             let file_name = format!("docs/chapters/chapter-{}.html", chapter.index);
             std::fs::write(file_name, file_text).unwrap();
             chapter
@@ -181,7 +188,7 @@ fn run() {
         })
         .collect::<Vec<_>>()
         .join("\n");
-    let file = pack(chapters);
+    let file = pack(chapters, Mode::Index);
     std::fs::write("docs/index.html", file).unwrap();
 }
 
