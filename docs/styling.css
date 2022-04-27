@@ -80,7 +80,8 @@ p {
     color: #ffbfd7;
     display: flex;
     flex-direction: column;
-    font-family: 'Source Sans Pro', sans-serif;
+    /* font-family: 'Source Sans Pro', sans-serif; */
+    font-family: 'Playfair Display', serif;
     -webkit-font-smoothing: antialiased;
     -webkit-font-smoothing: subpixel-antialiased;
     text-rendering: geometricprecision;
