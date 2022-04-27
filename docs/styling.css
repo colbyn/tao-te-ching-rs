@@ -81,7 +81,8 @@ p {
     display: flex;
     flex-direction: column;
     /* font-family: 'Source Sans Pro', sans-serif; */
-    font-family: 'Playfair Display', serif;
+    /* font-family: 'Playfair Display', serif; */
+    font-family: 'Lexend', sans-serif;
     -webkit-font-smoothing: antialiased;
     -webkit-font-smoothing: subpixel-antialiased;
     text-rendering: geometricprecision;
